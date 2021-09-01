@@ -24,16 +24,33 @@ module.exports = {
         publicPath: '/static/',
     },
     module: {
-        rules: [{
-            test: /\.[tj]sx?$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['@babel/preset-env', '@babel/preset-react'],
+        rules: [
+            {
+                test: /\.[tj]sx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
                 },
             },
-        }],
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'local',
+                                localIdentName: '[name]__[local]--[hash:base64:5]',
+                            },
+                        },
+                    },
+                ],
+            }
+        ],
     },
     devtool: IS_DEV ? 'eval' : false,
     plugins: IS_DEV ? [

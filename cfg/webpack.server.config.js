@@ -19,15 +19,31 @@ module.exports = {
         minimize: false,
     },
     module: {
-        rules: [{
-            test: /\.[tj]sx?$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['@babel/preset-env', '@babel/preset-react'],
+        rules: [
+            {
+                test: /\.[tj]sx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
                 },
-            },
-        }],
+            }, {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                mode: 'local',
+                                localIdentName: '[name]__[local]--[hash:base64:5]',
+                                exportOnlyLocals: true,
+                            },
+                        },
+                    },
+                ],
+            }
+        ],
     },
 }
